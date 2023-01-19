@@ -8,18 +8,27 @@ class Handler implements URLHandler {
 
     public String handleRequest(URI url) {
         if (url.getPath().equals("/")) {
-            return String.format("String list: %d", strings);
+            String stringList = "";
+            stringList += "String List: ";
+            for(int i = 0; i < strings.size(); i++){
+                stringList += strings.get(i);
+                stringList += " ";
+            }
+            return stringList;
         } 
         else if (url.getPath().contains("/search")) {
             String[] parameters = url.getQuery().split("=");
             if (parameters[0].equals("s")) {
                 String search = parameters[1];
+                String stringList = "";
                 for(int i = 0; i < strings.size(); i++){
                     if(strings.get(i).contains(search)){
-                        return String.format(strings.get(i) + " ");
+                        stringList += strings.get(i);
+                        stringList += " ";
                     }
+                    
                 }
-                return "404 Not Found!";
+                return stringList;
             }
             return "404 Not Found!";
         } else {
